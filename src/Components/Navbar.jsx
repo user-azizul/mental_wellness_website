@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineClose } from "react-icons/md";
+import { motion } from "framer-motion";
 
 function Navbar() {
   const [isActive, setIsActive] = useState("home");
@@ -9,55 +11,116 @@ function Navbar() {
   const handleClick = (section) => {
     setIsActive(section);
   };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+  const handleScroll = () => {
+    const sections = ["home", "services", "about us", "pricing", "testimonial"];
+    const scrollPosition = window.scrollY + 100;
+    sections.forEach((section) => {
+      const element = document.getElementById(section);
+      if (element) {
+        const offsetTop = element.offsetTop;
+        const height = element.offsetHeight;
+        if (
+          scrollPosition >= offsetTop &&
+          scrollPosition < offsetTop + height
+        ) {
+          setIsActive(section);
+        }
+      }
+    });
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  const scrollTo = (targetId) => {
+    const targetElement = document.getElementById(targetId);
+    window.scrollTo({
+      top: targetElement.offsetTop,
+      behavior: "smooth",
+    });
+  };
 
   const NavLinks = (
     <ul className="font-medium flex flex-col md:justify-between justify-normal md:flex-row gap-4">
       <li>
-        <a
+        <motion.a
           href="#home"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           className={`text-white ${isActive === "home" ? "isActive" : ""}`}
-          onClick={() => handleClick("home")}
+          onClick={() => {
+            handleClick("home");
+            scrollTo("home");
+            handleClose();
+          }}
         >
           Home
-        </a>
+        </motion.a>
       </li>
       <li>
-        <a
+        <motion.a
           href="#services"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           className={`text-white ${isActive === "services" ? "isActive" : ""}`}
-          onClick={() => handleClick("services")}
+          onClick={() => {
+            handleClick("services");
+            scrollTo("services");
+            handleClose();
+          }}
         >
           Services
-        </a>
+        </motion.a>
       </li>
       <li>
-        <a
+        <motion.a
           href="#about"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           className={`text-white ${isActive === "about us" ? "isActive" : ""}`}
-          onClick={() => handleClick("about us")}
+          onClick={() => {
+            handleClose();
+            handleClick("about us");
+            scrollTo("about us");
+          }}
         >
           About Us
-        </a>
+        </motion.a>
       </li>
       <li>
-        <a
+        <motion.a
           href="#pricing"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           className={`text-white ${isActive === "pricing" ? "isActive" : ""}`}
-          onClick={() => handleClick("pricing")}
+          onClick={() => {
+            handleClose();
+            handleClick("pricing");
+            scrollTo("pricing");
+          }}
         >
           Pricing
-        </a>
+        </motion.a>
       </li>
       <li>
-        <a
+        <motion.a
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           href="#testimonial"
           className={`text-white ${
             isActive === "testimonial" ? "isActive" : ""
           }`}
-          onClick={() => handleClick("testimonial")}
+          onClick={() => {
+            handleClose();
+            handleClick("testimonial");
+            scrollTo("testimonial");
+          }}
         >
           Testimonial
-        </a>
+        </motion.a>
       </li>
     </ul>
   );
@@ -107,6 +170,14 @@ function Navbar() {
         <nav className=" absolute top-full left-0 w-full bg-heroBg z-20 md:hidden">
           <ul className="felx flex-col p-4 space-y-3">
             {NavLinks.props.children}
+            <li className="block md:hidden">
+              <a
+                href="#contact"
+                className="text-white bg-primary hover:bg-primary/90 px-3 py-1.5 rounded"
+              >
+                Contact Us
+              </a>
+            </li>
           </ul>
         </nav>
       )}
