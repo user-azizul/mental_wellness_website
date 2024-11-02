@@ -2,7 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
 
-body {
+html  {
     scroll-behavior: smooth;
 }
 .isActive{
@@ -21,7 +21,7 @@ body {
   }
   
   .react-tabs__tab {
-    background: white;
+   
     display: inline-block;
     position: relative;
     list-style: none;
@@ -30,10 +30,10 @@ body {
   }
   
   .react-tabs__tab--selected {
-    background: #fff;
-    border: 1px solid #06a055 !important;
-    color: black;
-    border-radius: 5px;
+    background: #06a055 !important;
+  
+    color: white !important;
+    border-radius: 5px !important;
     outline: none;
   }
   
