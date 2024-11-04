@@ -51,8 +51,10 @@ function Navbar() {
             <motion.a
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className={`text-white cursor-pointer ${
-                isActive === section ? "isActive" : ""
+              className={`cursor-pointer transition-colors ${
+                isActive === section
+                  ? "text-primary font-semibold"
+                  : "text-white"
               }`}
               onClick={() => {
                 handleClick(section);
@@ -68,19 +70,19 @@ function Navbar() {
   );
 
   return (
-    <header className="bg-heroBg text-white py-6 px-4 fixed top-0 left-0 right-0 z-10">
-      <div className="container mx-auto flex justify-between items-center h-full">
+    <header className="bg-heroBg text-white py-4 px-6 fixed top-0 left-0 right-0 z-10 shadow-lg">
+      <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div>
           <a href="#">
-            <img src="/logo.svg" alt="Logo" />
+            <img src="/logo.svg" alt="Logo" className="h-8" />
           </a>
         </div>
 
-        {/* Navigation links */}
+        {/* Desktop Navigation Links */}
         <div className="hidden md:flex">{NavLinks}</div>
 
-        {/* Contact Button */}
+        {/* Contact Button for Desktop */}
         <div className="hidden md:block">
           <a
             href="#contact"
@@ -94,13 +96,9 @@ function Navbar() {
         <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-white focus:outline-none"
+            className="text-white focus:outline-none text-2xl"
           >
-            {isOpen ? (
-              <MdOutlineClose className="size-6" />
-            ) : (
-              <HiMenuAlt3 className="size-6" />
-            )}
+            {isOpen ? <MdOutlineClose /> : <HiMenuAlt3 />}
           </button>
         </div>
       </div>
@@ -108,12 +106,12 @@ function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <nav className="absolute top-full left-0 w-full bg-heroBg z-20 md:hidden">
-          <ul className="flex flex-col p-4 space-y-3">
+          <ul className="flex flex-col p-4 space-y-4">
             {NavLinks.props.children}
             <li>
               <a
                 href="#contact"
-                className="text-white bg-primary hover:bg-primary/90 px-3 py-1.5 rounded"
+                className="text-white bg-primary hover:bg-primary/90 px-3 py-1.5 rounded text-center"
               >
                 Contact Us
               </a>
